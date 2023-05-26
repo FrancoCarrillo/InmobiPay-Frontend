@@ -1,0 +1,106 @@
+<div class="flex min-h-screen">
+  <div class="w-1/2">
+    <div class="container px-10 my-14">
+      <p class="text-4xl font-medium">Solicita tu prestamo <br>
+        100% online</p>
+        <button (click)="goBackToPreviousStep()">Atrás</button>
+    </div>
+    <div [formGroup]="loanForm" class="container px-10 my-14">
+
+      <mat-form-field floatLabel="always" appearance="fill">
+        <mat-label>Tasa de interes</mat-label>
+        <input title="rate" matInput formControlName="rate" type="number" min="0" max="100" />
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="fill">
+        <mat-label>Cantidad de cuotas</mat-label>
+        <input title="amountPayments" matInput formControlName="amountPayments" type="number" min="0" max="100" />
+        <!-- Validar el tamaño -->
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="fill">
+        <mat-label>Valor de la propiedad</mat-label>
+        <input title="propertyValue" matInput formControlName="propertyValue" type="number" min="0" max="100" />
+        <!-- Validar el tamaño -->
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="fill">
+        <mat-label>Monto del prestamo</mat-label>
+        <input title="loanAmount" matInput formControlName="loanAmount" type="number" min="0" max="100" />
+        <!-- Validar el tamaño -->
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="fill">
+        <mat-label>Seguro de gravamen</mat-label>
+        <input title="lienInsurance" matInput formControlName="lienInsurance" type="number" min="0" max="100" />
+        <!-- Validar el tamaño -->
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" appearance="fill">
+        <mat-label>Seguro todo riesgo</mat-label>
+        <input title="allRiskInsurance" matInput formControlName="allRiskInsurance" type="number" min="0" max="100" />
+        <!-- Validar el tamaño -->
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de moneda</mat-label>
+        <mat-select formControlName="currencyName">
+          <mat-option *ngFor="let money of this.moneyOptions" [value]="money.name">
+            {{ money.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div appearance="fill">
+        <mat-checkbox class="example-margin" formControlName="isPhysicalShipping">Envio fisico</mat-checkbox>
+      </div>
+
+      <div appearance="fill">
+        <mat-checkbox class="example-margin" formControlName="isTotal">Es total</mat-checkbox>
+      </div>
+
+      <div appearance="fill">
+        <mat-checkbox class="example-margin" formControlName="isPartial">Es parcial</mat-checkbox>
+      </div>
+
+
+      <mat-form-field floatLabel="always" appearance="fill">
+        <mat-label>Periodo de Gracia</mat-label>
+        <input title="monthlyGracePeriod" matInput formControlName="monthlyGracePeriod" type="number" min="0"
+          max="100" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de interes</mat-label>
+        <mat-select formControlName="interestRateType">
+          <mat-option *ngFor="let money of this.interestOptions" [value]="money.type">
+            {{ money.type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="onClear()">Limpiar</button>
+        <button mat-raised-button color="accent" (click)="onLoanFormComplete()">Generar Simulador</button>
+
+      </div>
+
+
+    </div>
+
+  </div>
+  <div class="w-1/2 flex justify-center items-center" [ngStyle]="{'background-color': personalData.selectedBankColor}">
+    <div class="absolute top-3 right-10">
+      <div class="flex justify-center items-center w-12 h-12 bg-white bg-opacity-20 hover:bg-opacity-60 rounded-full transition duration-300">
+        <button mat-icon-button (click)="logout()" matTooltip="Cerrar sesión" matTooltipPosition="below">
+          <mat-icon class="text-white">logout</mat-icon>
+        </button>
+      </div>
+    </div>
+    <img *ngIf=" personalData.selectedBank == 2" src="../../../../assets/form_bcp.png" alt="BCP"
+      class="w-1/2 object-cover">
+    <img *ngIf=" personalData.selectedBank == 1" src="../../../../assets/form_ibk.png" alt="Interbank"
+      class="w-1/2 object-cover">
+  </div>
+</div>
