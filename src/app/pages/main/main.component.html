@@ -1,0 +1,3 @@
+<app-personal *ngIf="currentStep === 'personal'" (personalDataComplete)="onPersonalDataComplete($event)"></app-personal>
+<app-loan-form *ngIf="currentStep === 'loanForm'" [personalData]="personalData" (loanFormComplete)="onLoanFormComplete($event)" (goBack)="onGoBackPersonal()"></app-loan-form>
+<app-simulator *ngIf="currentStep === 'simulator'" [personalData]="personalData" [loanFormData]="loanFormData" (goBack)="onGoBackLoan()"></app-simulator>

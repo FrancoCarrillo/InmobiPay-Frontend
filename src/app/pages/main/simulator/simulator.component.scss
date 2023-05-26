@@ -1,0 +1,65 @@
+
+.custom-mat-header-cell {
+  background-color: #1976d2;
+  color: white;
+}
+
+.custom-mat-header-cell-bank-1{
+  background-color: #04bf50;
+  color: white;
+}
+
+.custom-mat-header-cell-bank-2{
+  background-color: #00337c;
+  color: white;
+}
+
+.custom-mat-cell {
+  color: #242424;
+}
+
+.mat-row:hover {
+  background-color: #e3f2fd;
+}
+
+:host ::ng-deep .mat-header-row.custom-mat-header-cell .mat-header-cell {
+  background-color: #1976d2;
+  color: white;
+}
+
+:host ::ng-deep .mat-header-row.custom-mat-header-cell-bank-1 .mat-header-cell {
+  background-color: #04bf50;
+  color: white;
+}
+:host ::ng-deep .mat-header-row.custom-mat-header-cell-bank-2 .mat-header-cell {
+  background-color: #00337c;
+  color: white;
+}
+
+:host ::ng-deep .mat-row.custom-mat-cell .mat-cell {
+  color: #242424;
+}
+
+:host ::ng-deep .mat-row.custom-mat-cell:hover {
+  background-color: #e3f2fd;
+}
+
+.hoverable-cell:hover {
+  background-color: #edf8ff !important;
+}
+
+mat-card {
+  width: 45%;
+  margin: 0 10px;
+  padding: 10px;
+
+  mat-card-header {
+    padding-bottom: 0;
+  }
+
+  mat-card-content {
+    p {
+      margin-bottom: 5px;
+    }
+  }
+}
