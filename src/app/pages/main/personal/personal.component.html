@@ -1,0 +1,94 @@
+<div class="flex min-h-screen">
+  <div class="w-1/2">
+    <div class="container px-10 my-14">
+      <p class="text-4xl font-medium">Solicita tu prestamo <br>
+      100% online</p>
+      <mat-stepper orientation="vertical" [linear]="true" #stepper>
+        <mat-step [stepControl]="fullNameFormGroup">
+          <form [formGroup]="fullNameFormGroup">
+            <ng-template matStepLabel>Nombre Completo</ng-template>
+            <mat-form-field>
+              <mat-label>Nombre completo</mat-label>
+              <input matInput placeholder="Nombre Completo" formControlName="fullNameForm" required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="ageFormGroup">
+          <form [formGroup]="ageFormGroup">
+            <ng-template matStepLabel>Edad</ng-template>
+            <mat-form-field>
+              <mat-label>Edad</mat-label>
+              <input type="number" min="18" max="99" matInput formControlName="ageForm"  required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Atrás</button>
+              <button mat-button matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="dniFormGroup">
+          <form [formGroup]="dniFormGroup">
+            <ng-template matStepLabel>Dni</ng-template>
+            <mat-form-field>
+              <mat-label>DNI</mat-label>
+              <input  matInput formControlName="dniForm" maxlength="8"  required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Atrás</button>
+              <button mat-button matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="bankFormGroup">
+          <form [formGroup]="bankFormGroup">
+            <ng-template matStepLabel>Tipo de banco</ng-template>
+              <mat-form-field>
+                <mat-label>Banco</mat-label>
+                <mat-select  formControlName="bankForm" (selectionChange)="onBankChange($event)">
+                  <mat-option  *ngFor="let bank of banks" [value]="bank.id">
+                    {{bank.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Atrás</button>
+              <button mat-button matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Listo</ng-template>
+          <p>Tienes todos los datos completados correctamente</p>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-button (click)="onPersonalDataComplete()">Continuar</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+      <button class="my-14" mat-raised-button color="primary" (click)="goToSavedLoan()">Préstamos guardados</button>
+
+    </div>
+
+  </div>
+  <div class="w-1/2 flex justify-center items-center relative" [ngStyle]="{'background-color': selectedBankColor}">
+    <div class="absolute top-3 right-10">
+      <div class="flex justify-center items-center w-12 h-12 bg-white bg-opacity-20 hover:bg-opacity-60 rounded-full transition duration-300">
+        <button mat-icon-button (click)="logout()" matTooltip="Cerrar sesión" matTooltipPosition="below">
+          <mat-icon class="text-white">logout</mat-icon>
+        </button>
+      </div>
+    </div>
+    <img *ngIf="condicion" src="../../../../assets/form_bcp.png" alt="BCP" class="w-1/2 object-cover">
+    <img *ngIf="!condicion" src="../../../../assets/form_ibk.png" alt="Interbank" class="w-1/2 object-cover">
+  </div>
+
+
+
+
+</div>
+
+
+
