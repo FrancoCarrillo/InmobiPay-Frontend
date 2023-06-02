@@ -1,22 +1,18 @@
-
 import { CurrencyService } from './../../../core/services/main/currency.service';
 import { InterestService } from './../../../core/services/main/interest.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PersonalForm } from '../personal/personal.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CurrencyModel } from 'src/app/core/models/currency.model';
-import { InterestType } from 'src/app/core/models/interestType.model';
-import { LoanForm } from 'src/app/core/models/loanForm.model';
+import { CurrencyModel } from 'src/app/core/models/entity/currency.model';
+import { InterestType } from 'src/app/core/models/entity/interestType.model';
+import { LoanForm } from 'src/app/core/models/entity/loanForm.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Router } from '@angular/router';
-
-
 
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loanform.component.html',
 })
-
 export class LoanFormComponent implements OnInit {
   @Input() personalData: PersonalForm = {} as PersonalForm;
   @Output() loanFormComplete = new EventEmitter<LoanForm>();
@@ -26,54 +22,43 @@ export class LoanFormComponent implements OnInit {
   interestOptions: InterestType[] = [];
 
   loanForm: FormGroup = new FormGroup({
-    rate: new FormControl<number>(
-      { value: 0, disabled: false },
-      [Validators.required]
-    ),
-    amountPayments: new FormControl<number>(
-      { value: 0, disabled: false },
-      [Validators.required]
-    ),
-    propertyValue: new FormControl<number>(
-      { value: 0, disabled: false },
-      [Validators.required]
-    ),
-    loanAmount: new FormControl<number>(
-      { value: 0, disabled: false },
-      [Validators.required]
-    ),
-    lienInsurance: new FormControl<number>(
-      { value: 0, disabled: false },
-      [Validators.required]
-    ),
-    allRiskInsurance: new FormControl<number>(
-      { value: 0, disabled: false },
-      [Validators.required]
-    ),
+    rate: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
+    amountPayments: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
+    propertyValue: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
+    loanAmount: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
+    lienInsurance: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
+    allRiskInsurance: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
     isPhysicalShipping: new FormControl<boolean>(
       { value: false, disabled: false },
       [Validators.required]
     ),
-    isTotal: new FormControl<boolean>(
-      { value: false, disabled: false },
-      [Validators.required]
-    ),
-    isPartial: new FormControl<boolean>(
-      { value: false, disabled: false },
-      [Validators.required]
-    ),
-    monthlyGracePeriod: new FormControl<number>(
-      { value: 0, disabled: false },
-      [Validators.required]
-    ),
-    interestRateType: new FormControl<string>(
-      { value: '', disabled: false },
-      [Validators.required]
-    ),
-    currencyName: new FormControl<string>(
-      { value: '', disabled: false },
-      [Validators.required]
-    ),
+    isTotal: new FormControl<boolean>({ value: false, disabled: false }, [
+      Validators.required,
+    ]),
+    isPartial: new FormControl<boolean>({ value: false, disabled: false }, [
+      Validators.required,
+    ]),
+    monthlyGracePeriod: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
+    interestRateType: new FormControl<string>({ value: '', disabled: false }, [
+      Validators.required,
+    ]),
+    currencyName: new FormControl<string>({ value: '', disabled: false }, [
+      Validators.required,
+    ]),
     bank: new FormControl<string>(
       { value: this.personalData.bank, disabled: false },
       [Validators.required]
@@ -82,13 +67,17 @@ export class LoanFormComponent implements OnInit {
       { value: false, disabled: false },
       [Validators.required]
     ),
-    isGreenBonus: new FormControl<boolean>(
-      { value: false, disabled: false },
-      [Validators.required]
-    ),
+    isGreenBonus: new FormControl<boolean>({ value: false, disabled: false }, [
+      Validators.required,
+    ]),
   });
 
-  constructor(private interestService: InterestService, private currencyService: CurrencyService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private interestService: InterestService,
+    private currencyService: CurrencyService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.interestService.getInterests().subscribe((data) => {
       this.interestOptions = data;
@@ -112,11 +101,9 @@ export class LoanFormComponent implements OnInit {
     this.loanFormComplete.emit(this.loanForm.value);
   }
 
-
   goBackToPreviousStep() {
     this.goBack.emit();
   }
-
 
   currentStep = 'personal';
 
@@ -132,5 +119,4 @@ export class LoanFormComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
 }

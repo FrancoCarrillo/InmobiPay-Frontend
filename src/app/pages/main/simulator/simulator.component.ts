@@ -2,11 +2,11 @@ import { Router } from '@angular/router';
 
 import { PaymenScheduleService } from './../../../core/services/main/paymentSchedule.service';
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { LoanForm } from 'src/app/core/models/loanForm.model';
+import { LoanForm } from 'src/app/core/models/entity/loanForm.model';
 import { PersonalForm } from '../personal/personal.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { PaymentSchedule } from 'src/app/core/models/paymentSchedule.model';
+import { PaymentSchedule } from 'src/app/core/models/entity/paymentSchedule.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 

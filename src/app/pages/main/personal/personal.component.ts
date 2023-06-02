@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 import { FormBuilder, Validators, } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Bank } from 'src/app/core/models/bank.model';
+import { Bank } from 'src/app/core/models/entity/bank.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 
