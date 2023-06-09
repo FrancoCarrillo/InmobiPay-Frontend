@@ -1,2 +1,32 @@
-<button (click)="login()">Inicia sesión</button>
-<button (click)="logout()">Cerrar Sesión</button>
+<div class="login-container">
+    <div class="login-section">
+      <h2 class="relative top-40 right-0 m-4 text-2xl text-blue-500">Bienvenido a InmobiliPay</h2>
+      <form [formGroup]="logInForm" (ngSubmit)="login()" class="flex flex-col justify-center items-center h-screen" >
+        <mat-form-field appearance="fill" class="inputs">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="Username">
+        </mat-form-field>
+        
+  
+        <mat-form-field appearance="fill" class="inputs">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Contraseña">
+          <mat-error *ngIf="logInForm.get('password')?.invalid && logInForm.get('password')?.touched">
+            Por favor ingresa una contraseña válida
+          </mat-error>
+        </mat-form-field>
+        <p>No tienes una cuenta?</p>
+        <p>REGISTRATE AQUÍ</p>
+        <button (click)="login()" mat-raised-button color="primary" type="submit" [disabled]="logInForm.invalid">Ingresar</button>
+      </form>
+    </div>
+
+    <div class="image-section">
+      <img src="../../../assets/Imagen1.png" alt="Imagen personal de interbank con laptop">
+    </div>
+</div>
+  
+
+
+<!-- <button (click)="login()">Inicia sesión</button>
+<button (click)="logout()">Cerrar Sesión</button> -->
