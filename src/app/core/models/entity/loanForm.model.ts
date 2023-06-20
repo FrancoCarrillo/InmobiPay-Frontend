@@ -6,7 +6,9 @@ export interface LoanForm {
   loanAmount:         number;
   lienInsurance:      number;
   allRiskInsurance:   number;
-  isPhysicalShipping: boolean;
+  administrativeExpenses: number;
+  postage: number;
+  commissions: number;
   interestRateType:   string;
   isGoodPayerBonus:   boolean;
   isGreenBonus:       boolean;

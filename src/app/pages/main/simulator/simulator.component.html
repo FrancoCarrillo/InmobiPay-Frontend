@@ -39,14 +39,15 @@
 
 
   </div>
-
+  <div>
   <hr class="my-4">
-  <p class="text-2xl font-medium">Var: {{van}}</p>
-  <p class="text-2xl font-medium">Tir: {{tir}}</p>
-  <div class="table-container mt-4 shadow-lg rounded-lg overflow-hidden">
+  <p class="p-4 text-2xl font-medium">Var: {{van}}</p>
+  <p class="p-4 first-line:text-2xl font-medium">Tir: {{tir}}</p>
+  <button mat-raised-button color="primary" (click)="calculate()">Calcular</button>
+  <button mat-raised-button color="primary" (click)="save()">Guardar</button>
+</div>
+  <div style="overflow-x: auto;" class="table-container mt-4 shadow-lg rounded-lg overflow-hidden">
     <table mat-table [dataSource]="dataSource" class="w-full divide-y divide-gray-200">
-      <!--['id','tea', 'tem' , 'gracePeriod','initialBalance', 'amortization', 'interest', 'lien_insurance', 'allRiskInsurance', 'commission', 'fee'];-->
-
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef
           [ngClass]="{'custom-mat-header-cell-bank-1': personalData.selectedBank === 1, 'custom-mat-header-cell-bank-2': personalData.selectedBank === 2}">
@@ -60,7 +61,7 @@
           Tasa efectiva anual </th>
         <td mat-cell *matCellDef="let element" class="custom-mat-cell hoverable-cell">
           <mat-form-field class="custom-mat-input" appearance="outline">
-            <input matInput [value]="element.tea">
+            <input matInput [value]="element.tea" (change)="onTeaChange($event, element.id)">
           </mat-form-field>
         </td>
       </ng-container>
@@ -78,10 +79,10 @@
           Periodo de gracia </th>
         <td mat-cell *matCellDef="let element" class="custom-mat-cell hoverable-cell">
           <mat-form-field appearance="outline" class="custom-mat-select">
-            <mat-select [value]="element.gracePeriod">
-              <mat-option value="Sin Plazo de gracia">Sin Plazo de Gracia</mat-option>
-              <mat-option value="Plazo de Gracia Total">Plazo de Gracia Total</mat-option>
-              <mat-option value="Plazo de Gracia Parcial">Plazo de Gracia Parcial</mat-option>
+            <mat-select [value]="element.gracePeriod"  (selectionChange)="onGracePeriodChange($event, element.id)">
+              <mat-option value="S">Sin Plazo de Gracia</mat-option>
+              <mat-option value="T">Plazo de Gracia Total</mat-option>
+              <mat-option value="P">Plazo de Gracia Parcial</mat-option>
             </mat-select>
           </mat-form-field>
         </td>
@@ -129,6 +130,20 @@
           [ngClass]="{'custom-mat-header-cell-bank-1': personalData.selectedBank === 1, 'custom-mat-header-cell-bank-2': personalData.selectedBank === 2}">
           Cuota </th>
         <td mat-cell *matCellDef="let element" class="custom-mat-cell hoverable-cell"> {{element.fee}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="administrativeExpenses">
+        <th mat-header-cell *matHeaderCellDef
+          [ngClass]="{'custom-mat-header-cell-bank-1': personalData.selectedBank === 1, 'custom-mat-header-cell-bank-2': personalData.selectedBank === 2}">
+          Gastos administrativos </th>
+        <td mat-cell *matCellDef="let element" class="custom-mat-cell hoverable-cell"> {{element.administrativeExpenses}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="postage">
+        <th mat-header-cell *matHeaderCellDef
+          [ngClass]="{'custom-mat-header-cell-bank-1': personalData.selectedBank === 1, 'custom-mat-header-cell-bank-2': personalData.selectedBank === 2}">
+          Portes </th>
+        <td mat-cell *matCellDef="let element" class="custom-mat-cell hoverable-cell"> {{element.postage}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"

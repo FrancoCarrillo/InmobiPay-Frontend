@@ -1,6 +1,6 @@
 import { CurrencyService } from './../../../core/services/main/currency.service';
 import { InterestService } from './../../../core/services/main/interest.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PersonalForm } from '../personal/personal.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CurrencyModel } from 'src/app/core/models/entity/currency.model';
@@ -8,7 +8,13 @@ import { InterestType } from 'src/app/core/models/entity/interestType.model';
 import { LoanForm } from 'src/app/core/models/entity/loanForm.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { Router } from '@angular/router';
-
+import { PaymenScheduleService } from 'src/app/core/services/main/paymentSchedule.service';
+import { PaymentSchedule } from 'src/app/core/models/entity/paymentSchedule.model';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loanform.component.html',
@@ -20,6 +26,8 @@ export class LoanFormComponent implements OnInit {
 
   moneyOptions: CurrencyModel[] = [];
   interestOptions: InterestType[] = [];
+
+  isLoading = false;
 
   loanForm: FormGroup = new FormGroup({
     rate: new FormControl<number>({ value: 0, disabled: false }, [
@@ -40,26 +48,23 @@ export class LoanFormComponent implements OnInit {
     allRiskInsurance: new FormControl<number>({ value: 0, disabled: false }, [
       Validators.required,
     ]),
-    isPhysicalShipping: new FormControl<boolean>(
-      { value: false, disabled: false },
-      [Validators.required]
-    ),
-    isTotal: new FormControl<boolean>({ value: false, disabled: false }, [
+    administrativeExpenses: new FormControl<number>({ value: 0, disabled: false }, [
       Validators.required,
     ]),
-    isPartial: new FormControl<boolean>({ value: false, disabled: false }, [
+    postage: new FormControl<number>({ value: 0, disabled: false }, [
       Validators.required,
     ]),
-    monthlyGracePeriod: new FormControl<number>({ value: 0, disabled: false }, [
+    commissions: new FormControl<number>({ value: 0, disabled: false }, [
       Validators.required,
     ]),
+
     interestRateType: new FormControl<string>({ value: '', disabled: false }, [
       Validators.required,
     ]),
     currencyName: new FormControl<string>({ value: '', disabled: false }, [
       Validators.required,
     ]),
-    bank: new FormControl<string>(
+    bank: new FormControl<number>(
       { value: this.personalData.bank, disabled: false },
       [Validators.required]
     ),
@@ -70,15 +75,43 @@ export class LoanFormComponent implements OnInit {
     isGreenBonus: new FormControl<boolean>({ value: false, disabled: false }, [
       Validators.required,
     ]),
+    cokRate: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
   });
+
+  loanFormData: LoanForm = {} as LoanForm;
+  van: number = 0;
+  tir: number = 0;
+  creditResponses: PaymentSchedule[] = [];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
+  dataSource: MatTableDataSource<PaymentSchedule> = new MatTableDataSource();
 
   constructor(
     private interestService: InterestService,
     private currencyService: CurrencyService,
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private paymenScheduleService: PaymenScheduleService,
+    private snackBar: MatSnackBar,
+    private http: HttpClient
+  ) { }
   ngOnInit(): void {
+    this.loanForm.get('rate')?.setValue(10);
+    this.loanForm.get('amountPayments')?.setValue(60);
+    this.loanForm.get('propertyValue')?.setValue(200000);
+    this.loanForm.get('loanAmount')?.setValue(150000);
+    this.loanForm.get('lienInsurance')?.setValue(0.028);
+    this.loanForm.get('allRiskInsurance')?.setValue(0.3);
+    this.loanForm.get('interestRateType')?.setValue("efectiva");
+    this.loanForm.get('isGoodPayerBonus')?.setValue(false);
+    this.loanForm.get('isGreenBonus')?.setValue(false);
+    this.loanForm.get('administrativeExpenses')?.setValue(2);
+    this.loanForm.get('postage')?.setValue(3);
+    this.loanForm.get('commissions')?.setValue(10);
+    this.loanForm.get('cokRate')?.setValue(20);
+
     this.interestService.getInterests().subscribe((data) => {
       this.interestOptions = data;
     });
@@ -91,15 +124,35 @@ export class LoanFormComponent implements OnInit {
     this.loanForm.get('bank')?.setValue(this.personalData.bank);
     this.loanForm.markAllAsTouched();
     if (this.loanForm.invalid) {
-      for (const field in this.loanForm.controls) {
-        if (this.loanForm.controls[field].invalid) {
-          console.log('Campo inválido:', field);
-        }
-      }
+      console.error('Invalid form fields:', this.loanForm.controls);
       return;
     }
-    this.loanFormComplete.emit(this.loanForm.value);
+    this.loanFormData = this.loanForm.value;
+    this.postCreditInformation(this.loanFormData).subscribe(
+      (res) => {
+        this.van = res.van;
+        this.tir = res.tir;
+        this.creditResponses = res.creditResponses;
+        this.dataSource = new MatTableDataSource(res.creditResponses);
+        this.dataSource.paginator = this.paginator;
+        this.loanFormComplete.emit(this.loanForm.value);
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error(error);
+        this.isLoading = false;
+        this.snackBar.open(error.error.message, 'Close', {
+          duration: 5000,
+          verticalPosition: 'top',
+        },
+
+        );
+      });
   }
+  postCreditInformation(simulatorForm: LoanForm): Observable<any> {
+    return this.paymenScheduleService.postCreditInformation(simulatorForm);
+  }
+
 
   goBackToPreviousStep() {
     this.goBack.emit();
