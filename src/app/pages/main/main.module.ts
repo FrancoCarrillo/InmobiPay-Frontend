@@ -10,6 +10,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +23,7 @@ import { LoanFormComponent } from './loan-form/loanform.component';
 import { SavedLoanComponent } from './saved-loan/saved-loan.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatPaginatorModule,
     MatIconModule,
     MatTooltipModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
 
