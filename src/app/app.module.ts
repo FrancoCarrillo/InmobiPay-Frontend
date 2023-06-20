@@ -10,6 +10,7 @@ import { AuthInterceptor } from './core/interceptor/auth.interceptor';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 
 import {MatButtonModule} from '@angular/material/button';
 @NgModule({
@@ -25,6 +26,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatIconModule,
     MatButtonModule
     
     

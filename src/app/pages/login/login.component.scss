@@ -1,51 +1,56 @@
-
-div{
-    overflow-y: hidden; 
+div {
+  overflow-y: hidden;
 }
 .login-container {
-    display: flex;
-    justify-content: space-between;
-    height: 100vh;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+  width: 100%;
 }
-  
+
 .login-section {
-    flex: 1;
-    padding: 1em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
 }
-  
+
+.login-logo {
+  width: 20%;
+  margin-bottom: 40px;
+}
+
 .image-section {
-    flex: 1;
-    padding: 1em;
-    background-color: #0039a6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    margin: 0;
+  flex: 1;
+  padding: 1em;
+  background-color: #0039a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  margin: 0;
 }
-  
+
 .image-section img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
-h2{
-    font-family: 'Roboto';
-    text-align: center;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 56px;
-    color: #13005A;
+h2 {
+  font-family: "Roboto";
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 56px;
+  color: #13005a;
 }
-form{
-    display: flex;
+
+button {
+  margin-top: 10px;
+  width: 100%;
 }
-.inputs{
-    width:30%;
-    margin:10px;
-}
-button{
-    margin-top: 20px;
-    width: 250px;
+
+.mat-mdc-form-field {
+  width: 100%;
 }
