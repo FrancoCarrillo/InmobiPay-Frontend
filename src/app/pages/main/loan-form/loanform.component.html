@@ -1,44 +1,43 @@
 <div class="flex min-h-screen">
   <div class="w-1/2">
     <div class="container px-10 my-14">
-      <p class="text-4xl font-medium">Solicita tu prestamo <br>
-        100% online</p>
+      <p class="text-4xl font-medium">Datos del prestamo</p>
         <button (click)="goBackToPreviousStep()">Atrás</button>
     </div>
     <div [formGroup]="loanForm" class="container px-10 my-14 grid grid-cols-2 gap-4">
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor entre 7.2 y 30" matTooltipPosition="right">
         <mat-label>Tasa de interes</mat-label>
         <input title="rate" matInput formControlName="rate" type="number" min="7.2" max="30" />
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor entre 60 y 300" matTooltipPosition="right">
         <mat-label>Cantidad de cuotas</mat-label>
         <input title="amountPayments" matInput formControlName="amountPayments" type="number" min="60" max="300" />
         <!-- Validar el tamaño -->
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill"  matTooltip="Valor entre 65200 y 464200" matTooltipPosition="right">
         <mat-label>Valor de la propiedad</mat-label>
         <input title="propertyValue" matInput formControlName="propertyValue" type="number" min="65200" max="464200" />
         <!-- Validar el tamaño -->
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor hasta 420000" matTooltipPosition="right">
         <mat-label>Monto del prestamo</mat-label>
-        <input title="loanAmount" matInput formControlName="loanAmount" type="number" min="1" max="400000" />
+        <input title="loanAmount" matInput formControlName="loanAmount" type="number" min="1" max="420000" />
         <!-- Validar el tamaño -->
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor entre 0.02 y 0.05" matTooltipPosition="right">
         <mat-label>Seguro de gravamen</mat-label>
-        <input title="lienInsurance" matInput formControlName="lienInsurance" type="number" min="0.001" max="100" />
+        <input title="lienInsurance" matInput formControlName="lienInsurance" type="number" min="0.02" max="0.05" />
         <!-- Validar el tamaño -->
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor entre 0.1 y 0.5" matTooltipPosition="right">
         <mat-label>Seguro todo riesgo</mat-label>
-        <input title="allRiskInsurance" matInput formControlName="allRiskInsurance" type="number" min="0.001" max="100" />
+        <input title="allRiskInsurance" matInput formControlName="allRiskInsurance" type="number" min="0.1" max="0.5" />
         <!-- Validar el tamaño -->
       </mat-form-field>
 
@@ -54,27 +53,27 @@
 
 
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor hasta 30" matTooltipPosition="right">
         <mat-label>Gastos administrativos</mat-label>
-        <input title="administrativeExpenses" matInput formControlName="administrativeExpenses" type="number" min="0.001"
-          max="100" />
+        <input title="administrativeExpenses" matInput formControlName="administrativeExpenses" type="number" min="0"
+          max="30" />
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
-        <mat-label>Gastos de envío</mat-label>
-        <input title="postage" matInput formControlName="postage" type="number" min="0.001"
-          max="100" />
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor hasta 15" matTooltipPosition="right">
+        <mat-label>Portes</mat-label>
+        <input title="postage" matInput formControlName="postage" type="number" min="0"
+          max="15" />
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor hasta 50" matTooltipPosition="right">
         <mat-label>Comisiones</mat-label>
-        <input title="commissions" matInput formControlName="commissions" type="number" min="0.001"
-          max="100" />
+        <input title="commissions" matInput formControlName="commissions" type="number" min="0"
+          max="50" />
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" appearance="fill">
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor entre 1 hasta 100" matTooltipPosition="right">
         <mat-label>Cok</mat-label>
-        <input title="cokRate" matInput formControlName="cokRate" type="number" min="0.001"
+        <input title="cokRate" matInput formControlName="cokRate" type="number" min="1"
           max="100" />
       </mat-form-field>
 

@@ -38,10 +38,10 @@ export class PersonalComponent {
   ]
 
   fullNameFormGroup = this._formBuilder.group({
-    fullNameForm: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    fullNameForm: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[A-Za-z ]*$')]],
   });
   ageFormGroup = this._formBuilder.group({
-    ageForm: [0, [Validators.required, Validators.min(18), Validators.max(99)]],
+    ageForm: [0, [Validators.required, Validators.min(18), Validators.max(99), Validators.pattern('^[0-9]*$')]],
   });
   dniFormGroup = this._formBuilder.group({
     dniForm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern('^[0-9]*$')]],

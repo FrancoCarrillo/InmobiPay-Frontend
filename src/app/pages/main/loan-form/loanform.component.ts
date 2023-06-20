@@ -1,6 +1,13 @@
 import { CurrencyService } from './../../../core/services/main/currency.service';
 import { InterestService } from './../../../core/services/main/interest.service';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { PersonalForm } from '../personal/personal.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CurrencyModel } from 'src/app/core/models/entity/currency.model';
@@ -48,9 +55,10 @@ export class LoanFormComponent implements OnInit {
     allRiskInsurance: new FormControl<number>({ value: 0, disabled: false }, [
       Validators.required,
     ]),
-    administrativeExpenses: new FormControl<number>({ value: 0, disabled: false }, [
-      Validators.required,
-    ]),
+    administrativeExpenses: new FormControl<number>(
+      { value: 0, disabled: false },
+      [Validators.required]
+    ),
     postage: new FormControl<number>({ value: 0, disabled: false }, [
       Validators.required,
     ]),
@@ -96,7 +104,7 @@ export class LoanFormComponent implements OnInit {
     private paymenScheduleService: PaymenScheduleService,
     private snackBar: MatSnackBar,
     private http: HttpClient
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.loanForm.get('rate')?.setValue(10);
     this.loanForm.get('amountPayments')?.setValue(60);
@@ -104,7 +112,7 @@ export class LoanFormComponent implements OnInit {
     this.loanForm.get('loanAmount')?.setValue(150000);
     this.loanForm.get('lienInsurance')?.setValue(0.028);
     this.loanForm.get('allRiskInsurance')?.setValue(0.3);
-    this.loanForm.get('interestRateType')?.setValue("efectiva");
+    this.loanForm.get('interestRateType')?.setValue('efectiva');
     this.loanForm.get('isGoodPayerBonus')?.setValue(false);
     this.loanForm.get('isGreenBonus')?.setValue(false);
     this.loanForm.get('administrativeExpenses')?.setValue(2);
@@ -144,15 +152,13 @@ export class LoanFormComponent implements OnInit {
         this.snackBar.open(error.error.message, 'Close', {
           duration: 5000,
           verticalPosition: 'top',
-        },
-
-        );
-      });
+        });
+      }
+    );
   }
   postCreditInformation(simulatorForm: LoanForm): Observable<any> {
     return this.paymenScheduleService.postCreditInformation(simulatorForm);
   }
-
 
   goBackToPreviousStep() {
     this.goBack.emit();

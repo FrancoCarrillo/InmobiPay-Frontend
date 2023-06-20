@@ -9,6 +9,7 @@ export interface LoanForm {
   administrativeExpenses: number;
   postage: number;
   commissions: number;
+  currencyName: number;
   interestRateType:   string;
   isGoodPayerBonus:   boolean;
   isGreenBonus:       boolean;
