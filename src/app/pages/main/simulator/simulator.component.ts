@@ -9,6 +9,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PaymentSchedule } from 'src/app/core/models/entity/paymentSchedule.model';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SaveCreditsService } from 'src/app/core/services/main/savecredits.service';
+import { SaveCreditPayload } from 'src/app/core/models/entity/save.credits.model';
 interface TableRow {
   id: number;
   tea: number;
@@ -58,6 +60,10 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
 
   @Input() loanFormData: LoanForm = {} as LoanForm;
   @Input() personalData: PersonalForm = {} as PersonalForm;
+  @Input() savedLoan: boolean = false;
+  @Output() delete = new EventEmitter<number>();
+  @Input() creditId: number = 0;
+
 
   tableData: TableRow[] = [];
 
@@ -78,11 +84,21 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
 
   }
 
+  onDelete(): void {
+    if (this.creditId) {
+      this.delete.emit(this.creditId);
+    } else {
+      console.error('Error: creditId is undefined');
+    }
+  }
+
+
+
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<PaymentSchedule> = new MatTableDataSource();
   displayedColumns: string[] = ['id', 'tea', 'tem', 'gracePeriod', 'initialBalance', 'amortization', 'interest', 'lien_insurance', 'allRiskInsurance', 'commission', 'administrativeExpenses', 'postage', 'fee', 'finalBalance'];
 
-  constructor(private snackBar: MatSnackBar,private paymenScheduleService: PaymenScheduleService, private authService: AuthService, private router: Router) { }
+  constructor(private snackBar: MatSnackBar,private paymenScheduleService: PaymenScheduleService, private authService: AuthService, private router: Router, private saveCreditsService: SaveCreditsService) { }
 
   ngAfterViewInit() {
     this.postCreditInformation();
@@ -139,7 +155,8 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
       isGreenBonus: this.loanFormData.isGreenBonus,
       cokRate: this.loanFormData.cokRate
     };
-    //console.log(reschedule);
+
+
 
     this.paymenScheduleService.postRescheduleInformation(reschedule).subscribe((res) => {
       this.van = res.van;
@@ -189,8 +206,43 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   }
 
 
+
   save(): void {
 
+    console.log(this.loanFormData);
+    console.log(this.personalData);
+    const fechaHoy = new Date();
+    const fecha = fechaHoy.getFullYear() + '-' + (fechaHoy.getMonth() + 1) + '-' + fechaHoy.getDate();
 
+    const payload: SaveCreditPayload = {
+      name: this.personalData.fullName + ' ' + fecha,
+      rate: this.loanFormData.rate,
+      amountPayments: this.loanFormData.amountPayments,
+      propertyValue: this.loanFormData.propertyValue,
+      loanAmount: this.loanFormData.loanAmount,
+      lienInsurance: this.loanFormData.lienInsurance,
+      allRiskInsurance: this.loanFormData.allRiskInsurance,
+      administrativeExpenses: this.loanFormData.administrativeExpenses,
+      postage: this.loanFormData.postage,
+      commissions: this.loanFormData.commissions,
+      interestRateType: this.loanFormData.interestRateType,
+      isGoodPayerBonus: this.loanFormData.isGoodPayerBonus,
+      isGreenBonus: this.loanFormData.isGreenBonus,
+      cokRate: this.loanFormData.cokRate,
+      //Sies que el currencyName es 1 es sol, si es 2 es dolar si es 3 es euro
+      currencyName: this.loanFormData.currencyName == 14 ? "Sol" : "Dolar",
+      userId: Number(this.authService.getUserId()),
+    };
+    //console.log(reschedule);
+    this.saveCreditsService.saveCreditInformation(payload).subscribe((data) => {
+
+      this.snackBar.open('Crédito guardado exitosamente!!', 'Cerrar', {
+        duration: 2000,
+      });
+    }, (error) => {
+      this.snackBar.open('Ha ocurrido un error: ' + error.message, 'Cerrar', {
+        duration: 2000,
+      });
+    });
   }
 }

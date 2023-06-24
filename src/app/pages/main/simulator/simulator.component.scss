@@ -14,6 +14,12 @@
   color: white;
 }
 
+.custom-mat-header-cell-bank-3{
+  background-color: #21007c;
+  color: white;
+}
+
+
 .custom-mat-cell {
   color: #242424;
 }
@@ -33,6 +39,11 @@
 }
 :host ::ng-deep .mat-header-row.custom-mat-header-cell-bank-2 .mat-header-cell {
   background-color: #00337c;
+  color: white;
+}
+
+:host ::ng-deep .mat-header-row.custom-mat-header-cell-bank-3 .mat-header-cell {
+  background-color: #21007c;
   color: white;
 }
 
@@ -63,3 +74,4 @@ mat-card {
     }
   }
 }
+

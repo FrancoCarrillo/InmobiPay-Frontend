@@ -17,6 +17,7 @@ export class AuthService {
     return this.http.post<any>(`${environment.API_URL}/api/user/auth/login`, { username, password })
       .pipe(tap((res) => {
         localStorage.setItem('token', res.token);
+        localStorage.setItem('id', res.id);
       }));
   }
 
@@ -26,5 +27,10 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('id');
+  }
+
+  getUserId(): string | null {
+    return localStorage.getItem('id');
   }
 }

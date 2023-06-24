@@ -1,5 +1,5 @@
 <div class="container px-10 my-14 mx-auto">
-  <p class="text-4xl font-medium">Cronograma de pagos</p>
+  <p  *ngIf="!savedLoan" class="text-4xl font-medium">Cronograma de pagos</p>
   <div class="absolute top-3 right-10">
     <div
       class="flex justify-center items-center w-12 h-12 bg-blue-600 bg-opacity-20 hover:bg-opacity-60 rounded-full transition duration-300"
@@ -14,8 +14,11 @@
       </button>
     </div>
   </div>
-  <button mat-raised-button color="primary" (click)="goBackToPreviousStep()">
+  <button  mat-raised-button color="primary" (click)="goBackToPreviousStep()" *ngIf="!savedLoan">
     Atrás
+  </button>
+  <button  mat-raised-button color="primary" (click)="onDelete()" *ngIf="savedLoan">
+    Eliminar
   </button>
   <div class="flex flex-row justify-between my-4">
     <mat-card class="mat-elevation-z4">
@@ -49,14 +52,14 @@
     </mat-card>
   </div>
   <div>
-    <hr class="my-4" />
-    <p class="p-4 text-2xl font-medium">VAN: {{ van }}</p>
-    <p class="p-4 first-line:text-2xl font-medium">TIR: {{ tir }}%</p>
-    <button mat-raised-button color="primary" (click)="calculate()">
-      Calcular
-    </button>
-    <button mat-raised-button color="primary" (click)="save()">Guardar</button>
+  <hr class="my-4">
+  <p class="p-4 text-2xl font-medium">VAN: {{ van }}</p>
+  <p class="p-4 first-line:text-2xl font-medium">TIR: {{ tir }}%</p>
+  <div class="button-container">
+    <button mat-raised-button class="button-primary"  *ngIf="!savedLoan" (click)="calculate()">Calcular</button>
+    <button mat-raised-button class="button-primary" *ngIf="!savedLoan" (click)="save()">Guardar</button>
   </div>
+</div>
   <div
     style="overflow-x: auto"
     class="table-container mt-4 shadow-lg rounded-lg overflow-hidden"
@@ -72,8 +75,10 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true == true
           }"
+
         >
           N°
         </th>
@@ -92,7 +97,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Tasa efectiva anual
@@ -118,7 +124,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Tasa efectiva mensual
@@ -138,7 +145,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Periodo de gracia
@@ -167,7 +175,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Saldo inicial
@@ -186,7 +195,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Amortización
@@ -205,7 +215,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Interés
@@ -224,7 +235,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Seguro de gravamen
@@ -243,7 +255,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Seguro todo riesgo
@@ -262,7 +275,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Comisión
@@ -282,7 +296,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Gastos administrativos
@@ -302,7 +317,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Portes
@@ -321,7 +337,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Cuota
@@ -340,7 +357,8 @@
           *matHeaderCellDef
           [ngClass]="{
             'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+            'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+            'custom-mat-header-cell-bank-3': savedLoan == true
           }"
         >
           Saldo Final
@@ -359,7 +377,8 @@
         *matHeaderRowDef="displayedColumns"
         [ngClass]="{
           'custom-mat-header-cell-bank-1': personalData.selectedBank === 1,
-          'custom-mat-header-cell-bank-2': personalData.selectedBank === 2
+          'custom-mat-header-cell-bank-2': personalData.selectedBank === 2,
+          'custom-mat-header-cell-bank-3': savedLoan == true
         }"
       ></tr>
       <tr
