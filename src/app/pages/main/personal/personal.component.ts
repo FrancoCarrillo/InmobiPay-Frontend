@@ -11,7 +11,7 @@ export interface PersonalForm {
   fullName: string;
   age: number;
   dni: string;
-  bank: string;
+  bank: number;
   selectedBank: number;
   selectedBankColor: string;
 }
@@ -26,26 +26,36 @@ export interface PersonalForm {
 
 export class PersonalComponent {
 
-  banks: Bank[] = []
+  banks: Bank[] = [
+    {
+      id: 1,
+      name: 'Interbank'
+    },
+    {
+      id: 2,
+      name: 'BCP'
+    }
+  ]
 
   fullNameFormGroup = this._formBuilder.group({
-    fullNameForm: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    fullNameForm: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[A-Za-z ]*$')]],
   });
   ageFormGroup = this._formBuilder.group({
-    ageForm: [0, [Validators.required, Validators.min(18), Validators.max(99)]],
+    ageForm: [0, [Validators.required, Validators.min(18), Validators.max(99), Validators.pattern('^[0-9]*$')]],
   });
   dniFormGroup = this._formBuilder.group({
     dniForm: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern('^[0-9]*$')]],
   });
   bankFormGroup = this._formBuilder.group({
-    bankForm: ['', [Validators.required]],
+    bankForm: [0, [Validators.required]],
   });
   condicion = false;
 
   @Output() personalDataComplete = new EventEmitter<PersonalForm>();
 
 
-  constructor(private _formBuilder: FormBuilder, private bankService: BankService, private authService: AuthService, private router: Router) { }
+  constructor(private _formBuilder: FormBuilder, private authService: AuthService, private router: Router) { }
+
 
   onPersonalDataComplete() {
     if (this.fullNameFormGroup.invalid || this.ageFormGroup.invalid || this.dniFormGroup.invalid || this.bankFormGroup.invalid) {
@@ -89,12 +99,16 @@ export class PersonalComponent {
 
   ngOnInit(): void {
     this.getBanks()
+    //Setear valores por defecto para el formulario
+    this.fullNameFormGroup.get('fullNameForm')?.setValue('Juan Perez');
+    this.ageFormGroup.get('ageForm')?.setValue(25);
+    this.dniFormGroup.get('dniForm')?.setValue('12345678');
+    this.bankFormGroup.get('bankForm')?.setValue(1);
+
   }
 
   getBanks() {
-    this.bankService.getBanks().subscribe((banks) => {
-      this.banks = banks;
-    });
+
   }
 
 }

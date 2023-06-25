@@ -17,7 +17,15 @@ export class RegisterComponent implements OnInit{
   
   User: RegisterDto = new RegisterDto("", "", "", "", 0, "", "")
 
-  register = new FormGroup({
+  
+
+  hide = true; 
+
+
+  constructor(private _router: Router, private _registerService: RegisterService) {}
+
+  ngOnInit(): void {
+    this.registerForm = new FormGroup({
       username: new FormControl ('', [Validators.required]),
       names: new FormControl('', [Validators.required]),
       age: new FormControl('', [Validators.required, Validators.min(18)]),
@@ -26,14 +34,6 @@ export class RegisterComponent implements OnInit{
       lastnames: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
   })
-
-  hide = true; 
-
-
-  constructor(private _router: Router, private _registerService: RegisterService) {}
-
-  ngOnInit(): void {
-    this.registerUser()
     
   }
 

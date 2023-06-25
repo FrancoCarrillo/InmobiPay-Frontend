@@ -14,6 +14,11 @@ const routes: Routes = [
     canActivate: [RedirectIfAuthenticatedGuard]
   },
   {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [RedirectIfAuthenticatedGuard]
+  },
+  {
     path: '',
     canActivate: [AuthGuard],
     children: [

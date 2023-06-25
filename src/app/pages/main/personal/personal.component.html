@@ -1,8 +1,7 @@
 <div class="flex min-h-screen">
   <div class="w-1/2">
     <div class="container px-10 my-14">
-      <p class="text-4xl font-medium">Solicita tu prestamo <br>
-      100% online</p>
+      <p class="text-4xl font-medium">Datos del cliente</p>
       <mat-stepper orientation="vertical" [linear]="true" #stepper>
         <mat-step [stepControl]="fullNameFormGroup">
           <form [formGroup]="fullNameFormGroup">
@@ -21,7 +20,7 @@
             <ng-template matStepLabel>Edad</ng-template>
             <mat-form-field>
               <mat-label>Edad</mat-label>
-              <input type="number" min="18" max="99" matInput formControlName="ageForm"  required>
+              <input type="number" min="18" max="99" maxlength="99" matInput formControlName="ageForm"  required>
             </mat-form-field>
             <div>
               <button mat-button matStepperPrevious>Atrás</button>
