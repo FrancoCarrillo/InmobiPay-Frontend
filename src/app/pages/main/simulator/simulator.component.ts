@@ -23,6 +23,7 @@ interface TableRow {
   postage: number;
   commission: number;
   fee: number;
+  finalBalance: number;
 }
 
 export interface GraceAndRatesRequest {
@@ -79,7 +80,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
   dataSource: MatTableDataSource<PaymentSchedule> = new MatTableDataSource();
-  displayedColumns: string[] = ['id', 'tea', 'tem', 'gracePeriod', 'initialBalance', 'amortization', 'interest', 'lien_insurance', 'allRiskInsurance', 'commission', 'fee', 'administrativeExpenses', 'postage'];
+  displayedColumns: string[] = ['id', 'tea', 'tem', 'gracePeriod', 'initialBalance', 'amortization', 'interest', 'lien_insurance', 'allRiskInsurance', 'commission', 'administrativeExpenses', 'postage', 'fee', 'finalBalance'];
 
   constructor(private snackBar: MatSnackBar,private paymenScheduleService: PaymenScheduleService, private authService: AuthService, private router: Router) { }
 
@@ -99,6 +100,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
         tea: row.tea,
         administrativeExpenses: row.administrativeExpenses,
         postage: row.postage,
+        finalBalance: row.finalBalance,
         tem: row.tem,
         gracePeriod: row.gracePeriod,
         initialBalance: row.initialBalance,
@@ -158,6 +160,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
         commission: row.commission,
         administrativeExpenses: row.administrativeExpenses,
         postage: row.postage,
+        finalBalance: row.finalBalance,
         fee: row.fee
       }));
     }, (error) => {
