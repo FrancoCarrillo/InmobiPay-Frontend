@@ -8,27 +8,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-
-
 @Component({
   selector: 'app-saved-loan',
   templateUrl: './saved-loan.component.html',
-  styleUrls: ['./saved-loan.component.scss']
+  styleUrls: ['./saved-loan.component.scss'],
 })
-
-
-
 export class SavedLoanComponent implements OnInit {
   id: string | null = '';
   isLoading: boolean = false;
-  savedCredits: BehaviorSubject<GetCreditInformation[]> = new BehaviorSubject<GetCreditInformation[]>([]);
+  savedCredits: BehaviorSubject<GetCreditInformation[]> = new BehaviorSubject<
+    GetCreditInformation[]
+  >([]);
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-
   hasData: boolean = false;
-  constructor(private saveCreditsService: SaveCreditsService,private router: Router, private snackBar: MatSnackBar,private cdr: ChangeDetectorRef,) {
-
-  }
+  constructor(
+    private saveCreditsService: SaveCreditsService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.id = localStorage.getItem('id');
@@ -37,34 +36,44 @@ export class SavedLoanComponent implements OnInit {
 
   getCreditInformation() {
     this.isLoading$.next(true);
-    this.saveCreditsService.getCreditInformation(this.id).subscribe((data) => {
-      this.savedCredits.next(data);
-      this.isLoading$.next(false);
-    }, error => {
-      this.isLoading$.next(false);
-    });
+    this.saveCreditsService.getCreditInformation(this.id).subscribe(
+      (data) => {
+        this.savedCredits.next(data);
+        this.isLoading$.next(false);
+      },
+      (error) => {
+        this.isLoading$.next(false);
+      }
+    );
   }
 
   deleteSavedCredit(id: number) {
-    this.isLoading$.next(true);
-    this.saveCreditsService.deleteCreditInformation(id).subscribe(() => {
-      this.getCreditInformation();
-      this.snackBar.open('Crédito eliminado con éxito', '', { duration: 2000 });
-    },
-      error => {
-        this.snackBar.open('Error al eliminar el crédito', '', { duration: 2000 });
-        this.isLoading$.next(false);
-      });
+    let confirmDelete = confirm('¿Está seguro que desea eliminar el crédito?');
+    if (confirmDelete) {
+      this.isLoading$.next(true);
+      this.saveCreditsService.deleteCreditInformation(id).subscribe(
+        (data) => {
+          this.getCreditInformation();
+          this.snackBar.open(data.message, '', {
+            duration: 2000,
+          });
+        },
+        (error) => {
+          this.snackBar.open(error.error.message, '', {
+            duration: 2000,
+          });
+          this.isLoading$.next(false);
+        }
+      );
+    }
   }
-
-
-
 
   personalData: PersonalForm = {} as PersonalForm;
   loanForm: LoanForm = {} as LoanForm;
 
   mapToLoanForm(savedCredits: GetCreditInformation): LoanForm {
     return {
+      name: savedCredits.name,
       rate: savedCredits.rate,
       amountPayments: savedCredits.amountPayments,
       propertyValue: savedCredits.propertyValue,
@@ -79,15 +88,11 @@ export class SavedLoanComponent implements OnInit {
       isGoodPayerBonus: savedCredits.isGoodPayerBonus,
       isGreenBonus: savedCredits.isGreenBonus,
       cokRate: savedCredits.cokRate,
-      finalBalance: 0
-    }
+      finalBalance: 0,
+    };
   }
-
 
   goBackToPreviousStep() {
     this.router.navigate(['/simulator']);
   }
-
-
-
 }

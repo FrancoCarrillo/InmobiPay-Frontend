@@ -1,8 +1,5 @@
 <div class="container px-10 my-14">
   <p class="text-4xl font-medium">Préstamos guardados</p>
-  <button mat-raised-button color="primary" class="p-4" (click)="goBackToPreviousStep()">
-    Atrás
-  </button>
 </div>
 <ng-container *ngIf="(isLoading$ | async); else dataOrNoData">
   <div class="no-data-message">

@@ -1,5 +1,6 @@
 export interface LoanForm {
   rate: number;
+  name: string;
   amountPayments: number;
   propertyValue: number;
   loanAmount: number;
