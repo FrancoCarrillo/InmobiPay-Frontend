@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit{
       age: new FormControl('', [Validators.required, Validators.min(18)]),
       dni: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      lastnames: new FormControl('', [Validators.required]),
+      lastNames: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
   })
     
@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit{
         alert("Los datos ingresados ya son usados")
       })
   } else{
-    alert("Se requiere de información")
+    alert("Información faltante")
   }
 }
 
