@@ -10,12 +10,15 @@ import { AuthInterceptor } from './core/interceptor/auth.interceptor';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 import {MatButtonModule} from '@angular/material/button';
+import { RegisterComponent } from './pages/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
     
     
     
