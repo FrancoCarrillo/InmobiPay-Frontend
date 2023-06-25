@@ -27,8 +27,7 @@
           <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
-      <p>No tienes una cuenta?</p>
-      <p>REGISTRATE AQUÍ</p>
+      <span class="conection">¿No tienes una cuenta? <a class="signUpConnection" routerLink="/register">Registrarse</a></span>
       <button
         (click)="login()"
         mat-raised-button

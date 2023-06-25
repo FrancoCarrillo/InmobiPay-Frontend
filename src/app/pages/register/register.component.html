@@ -1,91 +1,119 @@
+<div class="register-container">
+  <div class="image-section">
+    <img
+      src="../../../assets/form_ibk.png"
+      alt="Imagen de registro de Interbank"
+    />
+  </div>
 
-    <div class="register-container">
+  <div class="register-section">
+    <h2 class="title">Registra tus datos aquí</h2>
 
-        <div class="image-section">
-            <img src="../../../assets/form_ibk.png" alt="Imagen de registro de Interbank">
-        </div>
+    <form [formGroup]="registerForm">
+      <div class="container">
+        <mat-form-field appearance="fill" class="inputs">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Usuario" />
+          <mat-error *ngIf="username?.errors?.['required']">
+            Usuario es requerido
+          </mat-error>
+        </mat-form-field>
 
-        <div class="register-section ">
-            
-            <h2 class="title">Registra tus datos aquí</h2>
+        <mat-form-field appearance="fill" class="inputs">
+          <mat-label>Nombres</mat-label>
+          <input matInput formControlName="names" placeholder="Nombres" />
+          <mat-error *ngIf="names?.errors?.['required']">
+            Nombre es requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-            <form [formGroup]="registerForm">
-                
-                <div class="container">
-                    <mat-form-field appearance="fill" class="inputs">
-                        <mat-label>Username</mat-label>
-                        <input matInput formControlName="username" placeholder="Usuario">
-                        <mat-error *ngIf="username?.errors?.['required']">
-                            Usuario es requerido
-                        </mat-error>
-                    </mat-form-field>
-    
-                    <mat-form-field appearance="fill" class="inputs">
-                        <mat-label>Nombres</mat-label>
-                        <input matInput formControlName="names" placeholder="Nombres">
-                        <mat-error *ngIf="names?.errors?.['required']">
-                            Nombre es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                
-                <div class="container">
-                    <mat-form-field appearance="fill" class="inputs">
-                        <mat-label>Apellidos</mat-label>
-                        <input matInput formControlName="lastNames" placeholder="Apellidos">
-                        <mat-error *ngIf="lastNames?.errors?.['required']">
-                            Apellidos es requerido
-                        </mat-error>
-                    </mat-form-field>
-    
-                    <mat-form-field appearance="fill" class="inputs">
-                        <mat-label>Email</mat-label>
-                        <input matInput formControlName="email" placeholder="Email">
-                        <mat-error *ngIf="email?.errors?.['required']">
-                            Direccion de email es requerido
-                        </mat-error>
-                        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
-                            Por favor, ingrese un correo valido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                
-                <div class="container">
-                    <mat-form-field appearance="fill" class="inputs">
-                        <mat-label>Edad</mat-label>
-                        <input matInput formControlName="age" placeholder="Edad">
-                        <mat-error *ngIf="age?.errors?.['required']">
-                            Edad es requerida
-                        </mat-error>
-                    </mat-form-field>
-    
-                    <mat-form-field appearance="fill" class="inputs">
-                        <mat-label>DNI</mat-label>
-                        <input matInput formControlName="dni" placeholder="DNI">
-                        <mat-error *ngIf="dni?.errors?.['required']">
-                            DNI es requerido
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                
-                <div class="container">
-                    <mat-form-field appearance="fill" class="inputs contra">
-                        <mat-label>Contraseña</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" type="password" placeholder="Contraseña" formControlName="password"/>
-                        <mat-error *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
-                            Por favor, ingrese una contraseña válida
-                        </mat-error>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide"> 
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <button class="register-button" type="submit" mat-raised-button (click)="registerUser()">Registrar</button>
-                    <span class="conection">¿Ya tienes una cuenta? <a class="signUpConnection" routerLink="/login">Iniciar sesion</a></span>
-                </div>
-                
-            </form>
-        </div>
-    </div>
+      <div class="container">
+        <mat-form-field appearance="fill" class="inputs">
+          <mat-label>Apellidos</mat-label>
+          <input matInput formControlName="lastNames" placeholder="Apellidos" />
+          <mat-error *ngIf="lastNames?.errors?.['required']">
+            Apellidos es requerido
+          </mat-error>
+        </mat-form-field>
 
+        <mat-form-field appearance="fill" class="inputs">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Email" />
+          <mat-error *ngIf="email?.errors?.['required']">
+            Direccion de email es requerido
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+            Por favor, ingrese un correo valido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="container">
+        <mat-form-field appearance="fill" class="inputs">
+          <mat-label>Edad</mat-label>
+          <input matInput formControlName="age" placeholder="Edad" type="number"/>
+          <mat-error *ngIf="age?.errors?.['required']">
+            Edad es requerida
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="inputs">
+          <mat-label>DNI</mat-label>
+          <input matInput formControlName="dni" placeholder="DNI" />
+          <mat-error *ngIf="dni?.errors?.['required']">
+            DNI es requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="container">
+        <mat-form-field appearance="fill" class="inputs contra">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            type="password"
+            placeholder="Contraseña"
+            formControlName="password"
+          />
+          <mat-error
+            *ngIf="
+              registerForm.get('password')?.hasError('required') &&
+              registerForm.get('password')?.touched
+            "
+          >
+            Por favor, ingrese una contraseña válida
+          </mat-error>
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div>
+        <button
+          class="register-button"
+          color="primary"
+          type="submit"
+          mat-raised-button
+          (click)="registerUser()"
+          [disabled]="registerForm.invalid"
+        >
+          Registrar
+        </button>
+        <span class="conection"
+          >¿Ya tienes una cuenta?
+          <a class="signUpConnection" routerLink="/login"
+            >Iniciar sesion</a
+          ></span
+        >
+      </div>
+    </form>
+  </div>
+</div>

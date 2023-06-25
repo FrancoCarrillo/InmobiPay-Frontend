@@ -6,13 +6,15 @@ import { tap } from 'rxjs/operators';
 import { environment } from 'src/environment/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RegisterService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  register_f(User: RegisterDto): Observable<RegisterDto> {
-    return this.http.post<RegisterDto>(`${environment.API_URL}/api/user/auth/register`, RegisterDto)
+  register(userRequest: RegisterDto): Observable<any> {
+    return this.http.post<any>(
+      `${environment.API_URL}/api/user/auth/register`,
+      userRequest
+    );
   }
 }
