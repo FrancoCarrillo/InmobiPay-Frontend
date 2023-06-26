@@ -1,5 +1,6 @@
 export interface PaymentSchedule {
   id: number;
+  gracePeriod: string;
   initialBalance: number;
   amortization: number;
   interest: number;

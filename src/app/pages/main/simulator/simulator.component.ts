@@ -34,6 +34,7 @@ interface TableRow {
   commission: number;
   fee: number;
   finalBalance: number;
+  rowIndex: number;
 }
 
 export interface GraceAndRatesRequest {
@@ -81,6 +82,8 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     console.log(this.loanFormData);
+    console.log(this.loanFormData);
+    console.log(this.dataSource.data);
   }
 
   onDelete(): void {
@@ -92,7 +95,8 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   }
 
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
-  dataSource: MatTableDataSource<PaymentSchedule> = new MatTableDataSource();
+  dataSource: MatTableDataSource<TableRow> = new MatTableDataSource();
+
   displayedColumns: string[] = [
     'id',
     'tea',
@@ -116,10 +120,11 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private router: Router,
     private saveCreditsService: SaveCreditsService
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.postCreditInformation();
+
   }
 
   postCreditInformation() {
@@ -129,10 +134,9 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
         this.van = res.van;
         this.tir = res.tir;
         this.creditResponses = res.creditResponses;
-        this.dataSource = new MatTableDataSource(res.creditResponses);
-        this.dataSource.paginator = this.paginator;
+
         this.tableData = res.creditResponses.map(
-          (row: TableRow, index: number) => ({
+          (row: TableRow, index: number): TableRow => ({
             id: index + 1,
             tea: row.tea,
             administrativeExpenses: row.administrativeExpenses,
@@ -147,10 +151,19 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
             allRiskInsurance: row.allRiskInsurance,
             commission: row.commission,
             fee: row.fee,
+            rowIndex: index
           })
         );
+
+        if (this.tableData && this.tableData.length > 0) {
+          this.tableData[this.tableData.length - 1].gracePeriod = 'S';
+        }
+        this.dataSource = new MatTableDataSource<TableRow>(this.tableData);
+        this.dataSource.paginator = this.paginator;
       });
   }
+
+
 
   logout(): void {
     this.authService.logout();
@@ -184,10 +197,8 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
         this.van = res.van;
         this.tir = res.tir;
         this.creditResponses = res.creditResponses;
-        this.dataSource = new MatTableDataSource(res.creditResponses);
-        this.dataSource.paginator = this.paginator;
         this.tableData = res.creditResponses.map(
-          (row: TableRow, index: number) => ({
+          (row: TableRow, index: number): TableRow => ({
             id: index + 1,
             tea: row.tea,
             tem: row.tem,
@@ -202,8 +213,11 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
             postage: row.postage,
             finalBalance: row.finalBalance,
             fee: row.fee,
+            rowIndex: index
           })
         );
+        this.dataSource = new MatTableDataSource<TableRow>(this.tableData);
+        this.dataSource.paginator = this.paginator;
       },
       (error) => {
         this.snackBar.open(error.error.message, 'Close', {
@@ -214,13 +228,20 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
     );
   }
 
+
+
   onTeaChange(event: any, id: number) {
-    const newValue = event.target.value;
-    const index = this.tableData.findIndex((row) => row.id === id);
-    if (index >= 0) {
-      this.tableData[index].tea = +newValue;
+    let newTeaValue = event.target.value;
+    let startIndex = this.tableData.findIndex(row => row.id === id);
+    if (startIndex === -1) {
+      return;
     }
+    for (let i = startIndex; i < this.tableData.length; i++) {
+      this.tableData[i].tea = newTeaValue;
+    }
+    this.dataSource = new MatTableDataSource<TableRow>(this.tableData);
   }
+
 
   onGracePeriodChange(event: any, id: number) {
     const newValue = event.value;

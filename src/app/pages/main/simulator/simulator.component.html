@@ -139,6 +139,7 @@
         >
           <mat-form-field class="custom-mat-input" appearance="outline">
             <input
+              type="number"
               matInput
               [value]="element.tea"
               (change)="onTeaChange($event, element.id)"
@@ -188,6 +189,7 @@
           <mat-form-field appearance="outline" class="custom-mat-select">
             <mat-select
               [value]="element.gracePeriod"
+              [disabled]="element.rowIndex === dataSource.data.length - 1"
               (selectionChange)="onGracePeriodChange($event, element.id)"
             >
               <mat-option value="S">Sin Plazo de Gracia</mat-option>
@@ -197,6 +199,7 @@
           </mat-form-field>
         </td>
       </ng-container>
+
 
       <ng-container matColumnDef="initialBalance">
         <th
