@@ -106,20 +106,6 @@ export class LoanFormComponent implements OnInit {
     private http: HttpClient
   ) {}
   ngOnInit(): void {
-    this.loanForm.get('rate')?.setValue(10);
-    this.loanForm.get('amountPayments')?.setValue(60);
-    this.loanForm.get('propertyValue')?.setValue(200000);
-    this.loanForm.get('loanAmount')?.setValue(150000);
-    this.loanForm.get('lienInsurance')?.setValue(0.028);
-    this.loanForm.get('allRiskInsurance')?.setValue(0.3);
-    this.loanForm.get('interestRateType')?.setValue('efectiva');
-    this.loanForm.get('isGoodPayerBonus')?.setValue(false);
-    this.loanForm.get('isGreenBonus')?.setValue(false);
-    this.loanForm.get('administrativeExpenses')?.setValue(2);
-    this.loanForm.get('postage')?.setValue(3);
-    this.loanForm.get('commissions')?.setValue(10);
-    this.loanForm.get('cokRate')?.setValue(20);
-
     this.interestService.getInterests().subscribe((data) => {
       this.interestOptions = data;
     });

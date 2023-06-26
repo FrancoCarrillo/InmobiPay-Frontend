@@ -85,7 +85,6 @@ export class RegisterComponent implements OnInit {
     this.User.password = this.registerForm.get('password')?.value;
 
     if (this.registerForm.status == 'VALID') {
-      console.log('USERRR', this.User);
       this._registerService.register(this.User).subscribe(
         (data) => {
           this._snackBar.open(data.message, 'Cerrar', {

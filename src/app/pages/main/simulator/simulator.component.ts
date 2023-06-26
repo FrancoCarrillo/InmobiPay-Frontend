@@ -81,9 +81,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
   creditResponses: PaymentSchedule[] = [];
 
   ngOnInit(): void {
-    console.log(this.loanFormData);
-    console.log(this.loanFormData);
-    console.log(this.dataSource.data);
+
   }
 
   onDelete(): void {
