@@ -99,12 +99,6 @@ export class PersonalComponent {
 
   ngOnInit(): void {
     this.getBanks()
-    //Setear valores por defecto para el formulario
-    this.fullNameFormGroup.get('fullNameForm')?.setValue('Juan Perez');
-    this.ageFormGroup.get('ageForm')?.setValue(25);
-    this.dniFormGroup.get('dniForm')?.setValue('12345678');
-    this.bankFormGroup.get('bankForm')?.setValue(1);
-
   }
 
   getBanks() {
