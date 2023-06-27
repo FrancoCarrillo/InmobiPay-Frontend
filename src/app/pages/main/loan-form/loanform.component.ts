@@ -86,6 +86,9 @@ export class LoanFormComponent implements OnInit {
     cokRate: new FormControl<number>({ value: 0, disabled: false }, [
       Validators.required,
     ]),
+    initialCost: new FormControl<number>({ value: 0, disabled: false }, [
+      Validators.required,
+    ]),
   });
 
   loanFormData: LoanForm = {} as LoanForm;
@@ -119,6 +122,7 @@ export class LoanFormComponent implements OnInit {
     this.loanForm.get('postage')?.setValue(3);
     this.loanForm.get('commissions')?.setValue(10);
     this.loanForm.get('cokRate')?.setValue(20);
+    this.loanForm.get('initialCost')?.setValue(0);
 
     this.interestService.getInterests().subscribe((data) => {
       this.interestOptions = data;

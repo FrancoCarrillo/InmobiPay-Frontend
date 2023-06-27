@@ -86,6 +86,12 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field floatLabel="always" appearance="fill" matTooltip="Valor hasta 50" matTooltipPosition="right">
+        <mat-label>Costo Inicial</mat-label>
+        <input title="initialCost" matInput formControlName="initialCost" type="number" min="0"
+          max="100" />
+      </mat-form-field>
+
       <div appearance="fill">
         <mat-checkbox class="example-margin" formControlName="isGreenBonus">Bono de buen pagador sostenible</mat-checkbox>
       </div>

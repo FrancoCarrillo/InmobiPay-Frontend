@@ -131,6 +131,7 @@ export class SimulatorComponent implements OnInit, AfterViewInit {
     this.paymenScheduleService
       .postCreditInformation(this.loanFormData as LoanForm)
       .subscribe((res) => {
+        debugger;
         this.van = res.van;
         this.tir = res.tir;
         this.creditResponses = res.creditResponses;
